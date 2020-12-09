@@ -1,0 +1,20 @@
+:root {
+	--primaryColor: lightgreen;
+	--primaryColorAccent: green;
+	
+	--errorColor: orangered;
+	--errorColorAccent: firebrick;
+	--backgroundColor: black;
+	--borderColor: grey;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Consolas', Courier, monospace;
+	background-color: var(--backgroundColor);
+	color: var(--primaryColor);
+}
+

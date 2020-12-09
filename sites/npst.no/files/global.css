@@ -1,0 +1,10 @@
+body {
+	background: firebrick;
+	font-family: "Comic Sans", "Comic Sans MS", chalkboard, "apple color emoji",
+		"segoe ui emoji", "noto color emoji", "android emoji", "emojisymbols",
+		"emojione mozilla", "twemoji mozilla", "segoe ui symbol", sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}

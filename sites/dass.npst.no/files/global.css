@@ -1,0 +1,109 @@
+body {
+  box-sizing: border-box;
+  font-family: monospace, "apple color emoji", "segoe ui emoji",
+			"noto color emoji", "android emoji", "emojisymbols", "emojione mozilla",
+			"twemoji mozilla", "segoe ui symbol";
+}
+
+/* Scrollbars */
+
+::-webkit-scrollbar {
+  width: 26px;
+  height: 26px;
+}
+
+::-webkit-scrollbar-track {
+  background-image: linear-gradient(
+      45deg,
+      var(--material) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--material) 75%
+    ),
+    linear-gradient(
+      45deg,
+      var(--material) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--material) 75%
+    );
+  background-color: var(--border-lightest);
+  background-size: 4px 4px;
+  background-position: 0 0, 2px 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  box-sizing: border-box;
+  display: inline-block;
+  background: var(--material);
+  color: var(--material-text);
+
+  border-style: solid;
+  border-width: 2px;
+  border-left-color: var(--border-light);
+  border-top-color: var(--border-light);
+  border-right-color: var(--border-darkest);
+  border-bottom-color: var(--border-darkest);
+  box-shadow: inset 1px 1px 0px 1px var(--border-lightest),
+    inset -1px -1px 0 1px var(--border-dark);
+
+  outline-offset: -2px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: var(--material);
+}
+
+::-webkit-scrollbar-button {
+  box-sizing: border-box;
+  display: inline-block;
+  background: var(--material);
+  color: var(--material-text);
+
+  border-style: solid;
+  border-width: 2px;
+  border-left-color: var(--border-light);
+  border-top-color: var(--border-light);
+  border-right-color: var(--border-darkest);
+  border-bottom-color: var(--border-darkest);
+  box-shadow: inset 1px 1px 0px 1px var(--border-lightest),
+    inset -1px -1px 0 1px var(--border-dark);
+
+  display: block;
+  outline-offset: -2px;
+  height: 26px;
+  width: 26px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 0 0;
+}
+
+::-webkit-scrollbar-button:active,
+::-webkit-scrollbar-button:active {
+  background-position: 0 1px;
+  border-left-color: var(--border-darkest);
+  border-top-color: var(--border-darkest);
+  border-right-color: var(--border-lightest);
+  border-bottom-color: var(--border-lightest);
+  box-shadow: inset 1px 1px 0px 1px var(--border-dark),
+    inset -1px -1px 0 1px var(--border-light);
+}
+
+::-webkit-scrollbar-button:horizontal:increment:start,
+::-webkit-scrollbar-button:horizontal:decrement:end,
+::-webkit-scrollbar-button:vertical:increment:start,
+::-webkit-scrollbar-button:vertical:decrement:end {
+  display: none;
+}
+::-webkit-scrollbar-button:horizontal:decrement {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI2IiB3aWR0aD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIHRyYW5zZm9ybT0icm90YXRlKDkwIDEzIDEzKSI+CiAgICAgIDxwb2x5Z29uIGZpbGw9ImJsYWNrIiBwb2ludHM9IjYsMTAgMjAsMTAgMTMsMTciLz4KICAgIDwvZz4KICA8L3N2Zz4=);
+}
+::-webkit-scrollbar-button:horizontal:increment {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI2IiB3aWR0aD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIHRyYW5zZm9ybT0icm90YXRlKDI3MCAxMyAxMykiPgogICAgICA8cG9seWdvbiBmaWxsPSJibGFjayIgcG9pbnRzPSI2LDEwIDIwLDEwIDEzLDE3Ii8+CiAgICA8L2c+CiAgPC9zdmc+);
+}
+::-webkit-scrollbar-button:vertical:decrement {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI2IiB3aWR0aD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIHRyYW5zZm9ybT0icm90YXRlKDE4MCAxMyAxMykiPgogICAgICA8cG9seWdvbiBmaWxsPSJibGFjayIgcG9pbnRzPSI2LDEwIDIwLDEwIDEzLDE3Ii8+CiAgICA8L2c+CiAgPC9zdmc+);
+}
+::-webkit-scrollbar-button:vertical:increment {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI2IiB3aWR0aD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIHRyYW5zZm9ybT0icm90YXRlKDAgMTMgMTMpIj4KICAgICAgPHBvbHlnb24gZmlsbD0iYmxhY2siIHBvaW50cz0iNiwxMCAyMCwxMCAxMywxNyIvPgogICAgPC9nPgogIDwvc3ZnPg==);
+}

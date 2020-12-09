@@ -1,0 +1,14 @@
+{
+    "name": "DASS",
+    "short_name": "DASS",
+    "icons": [
+        {
+            "src": "/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#b22222",
+    "background_color": "#b22222",
+    "display": "standalone"
+}
