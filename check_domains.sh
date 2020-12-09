@@ -29,17 +29,17 @@ download_files() {
 unpack_sourcemaps() {
 	DOMAIN="$1"
 	DOMAIN_DIR="$SITE_DIR/$DOMAIN"
-	OUTPUT_DIR="./sites/$DOMAIN/unpacked"
+	RELATIVE_OUTPUT_DIR="./sites/$DOMAIN/unpacked"
 	ABSOLUTE_OUTPUT_DIR="$DOMAIN_DIR/unpacked"
 
 	# Unpack each sourcemap, delete the old unpacked files first
 	for FILE in $DOMAIN_DIR/files/build/*.map; do
 		if [[ $FILE == *"css"* ]]; then
 			rm -rf "$ABSOLUTE_OUTPUT_DIR/css"
-			OUTPUT_DIR="$OUTPUT_DIR/css"
+			OUTPUT_DIR="$RELATIVE_OUTPUT_DIR/css"
 		else
 			rm -rf "$ABSOLUTE_OUTPUT_DIR/js"
-			OUTPUT_DIR="$OUTPUT_DIR/js"
+			OUTPUT_DIR="$RELATIVE_OUTPUT_DIR/js"
 		fi
 
 		echo "Unpacking file: $FILE"
