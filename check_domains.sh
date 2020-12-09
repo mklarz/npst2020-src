@@ -57,10 +57,10 @@ unpack_sourcemaps() {
 }
 
 commit_diff() {
+	# Commit the changes
 	DOMAIN="$1"
-	DOMAIN_DIR="$2"
-	echo $DOMAIN
-	echo $DOMAIN_DIR
+	#git add -A
+	#git commit -m "Update $DOMAIN"
 }
 
 handle_diff() {
@@ -71,7 +71,7 @@ handle_diff() {
 	unpack_sourcemaps $DOMAIN
 
 	# Commit the differences
-	#commit_diff $DOMAIN $DOMAIN_DIR
+	commit_diff $DOMAIN $DOMAIN_DIR
 }
 
 check_domain() {
@@ -90,6 +90,7 @@ check_domain() {
 
 	if [[ `git status --porcelain` ]]; then
 		# We have a diff! Let's handle it
+		echo "There are differences, checking..."
 		handle_diff $DOMAIN
 	fi
 }
@@ -98,7 +99,12 @@ check_domain() {
 # Initialize stuff
 mkdir -p $SITE_DIR
 
+cd $SCRIPT_PATH # dirty
+
 # Handle each domain
 for DOMAIN in "${DOMAINS[@]}"; do
 	check_domain "$DOMAIN"
 done
+
+# Push changes (if any)
+#git push origin/main
