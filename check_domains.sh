@@ -59,8 +59,8 @@ unpack_sourcemaps() {
 commit_diff() {
 	# Commit the changes
 	DOMAIN="$1"
-	#git add -A
-	#git commit -m "Update $DOMAIN"
+	git add -A
+	git commit -m "Update $DOMAIN"
 }
 
 handle_diff() {
@@ -107,4 +107,4 @@ for DOMAIN in "${DOMAINS[@]}"; do
 done
 
 # Push changes (if any)
-#git push origin/main
+git push origin main
