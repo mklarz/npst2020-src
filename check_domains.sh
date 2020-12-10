@@ -15,14 +15,23 @@ DOMAINS=(npst.no dass.npst.no slede8.npst.no spst.no)
 
 ## FUNCTIONS
 download_files() {
-	# Download the tracked files from the specified URL
-	URL="$1"
-	OUTPUT_DIR="$2"
-	for FILE in "${FILES[@]}"; do
-		FILE_URL="$URL/$FILE"
-		OUTPUT_PATH="$OUTPUT_DIR/$FILE"
-		echo "Downloading: $FILE_URL"
-		wget -q "$FILE_URL" -O "$OUTPUT_PATH"
+  # Download the tracked files from the specified URL
+  URL="$1"
+  OUTPUT_DIR="$2"
+  for FILE in "${FILES[@]}"; do
+    TMP_FILE=$(mktemp /tmp/npst.XXXXXX)
+    FILE_URL="$URL/$FILE"
+    OUTPUT_PATH="$OUTPUT_DIR/$FILE"
+    echo "Downloading: $FILE_URL"
+    # Store the file temporary
+    wget -q "$FILE_URL" -O "$TMP_FILE"
+    FILE_SIZE=$(stat -c%s "$TMP_FILE")
+
+    if [ $FILE_SIZE -ne 0 ]; then
+      mv "$TMP_FILE" "$OUTPUT_PATH"
+    else
+      rm "$TMP_FILE"
+    fi
 	done
 }
 
@@ -32,68 +41,68 @@ unpack_sourcemaps() {
 	RELATIVE_OUTPUT_DIR="./sites/$DOMAIN/unpacked"
 	ABSOLUTE_OUTPUT_DIR="$DOMAIN_DIR/unpacked"
 
-	# Unpack each sourcemap, delete the old unpacked files first
-	for FILE in $DOMAIN_DIR/files/build/*.map; do
-		if [[ $FILE == *"css"* ]]; then
-			rm -rf "$ABSOLUTE_OUTPUT_DIR/css"
-			OUTPUT_DIR="$RELATIVE_OUTPUT_DIR/css"
-		else
-			rm -rf "$ABSOLUTE_OUTPUT_DIR/js"
-			OUTPUT_DIR="$RELATIVE_OUTPUT_DIR/js"
-		fi
+  # Unpack each sourcemap, delete the old unpacked files first
+  for FILE in $DOMAIN_DIR/files/build/*.map; do
+    if [[ $FILE == *"css"* ]]; then
+      rm -rf "$ABSOLUTE_OUTPUT_DIR/css"
+      OUTPUT_DIR="$RELATIVE_OUTPUT_DIR/css"
+    else
+      rm -rf "$ABSOLUTE_OUTPUT_DIR/js"
+      OUTPUT_DIR="$RELATIVE_OUTPUT_DIR/js"
+    fi
 
-		echo "Unpacking file: $FILE"
+    echo "Unpacking file: $FILE"
 
-		# source-map-unpack, best alternative atm.
-		# This tool also messes with paths, removing the first characters of each root file
-		# Fixed by:
-		# - editing source-map-unpack/dist/index.js (see source-map-unpack/index.js in this repo)
-		# - running npx patch-package
-		# In addition, it requires relative paths
-		# Another alternative is python: unwebpack-sourcemap, albeit more messy
-		unpack "$OUTPUT_DIR" "$FILE"
-	done
+    # source-map-unpack, best alternative atm.
+    # This tool also messes with paths, removing the first characters of each root file
+    # Fixed by:
+    # - editing source-map-unpack/dist/index.js (see source-map-unpack/index.js in this repo)
+    # - running npx patch-package
+    # In addition, it requires relative paths
+    # Another alternative is python: unwebpack-sourcemap, albeit more messy
+    unpack "$OUTPUT_DIR" "$FILE"
+  done
 }
 
 commit_diff() {
-	# Commit the changes
-	DOMAIN="$1"
-	git add -A
-	git commit -m "[$DOMAIN] UPDATE"
+  # Commit the changes
+  DOMAIN="$1"
+  git add -A
+  git commit -m "[$DOMAIN] UPDATE"
 }
 
 handle_diff() {
-	DOMAIN="$1"
-	DOMAIN_DIR="$SITE_DIR/$DOMAIN"
+  DOMAIN="$1"
+  DOMAIN_DIR="$SITE_DIR/$DOMAIN"
 
-	# Check sourcemaps
-	unpack_sourcemaps $DOMAIN
+  # Check sourcemaps
+  unpack_sourcemaps $DOMAIN
 
-	# Commit the differences
-	commit_diff $DOMAIN $DOMAIN_DIR
+  # Commit the differences
+  commit_diff $DOMAIN $DOMAIN_DIR
 }
 
 check_domain() {
-	DOMAIN="$1"
-	URL="https://$DOMAIN"
-	echo "Checking $DOMAIN"
-	DOMAIN_DIR="$SITE_DIR/$DOMAIN"
+  DOMAIN="$1"
+  URL="https://$DOMAIN"
+  echo "Checking $DOMAIN"
+  DOMAIN_DIR="$SITE_DIR/$DOMAIN"
 
-	# Create directories if missing
-	mkdir -p "$DOMAIN_DIR/unpacked/js"
-	mkdir -p "$DOMAIN_DIR/unpacked/css"
-	mkdir -p "$DOMAIN_DIR/files/build"
+  # Create directories if missing
+  mkdir -p "$DOMAIN_DIR/unpacked/js"
+  mkdir -p "$DOMAIN_DIR/unpacked/css"
+  mkdir -p "$DOMAIN_DIR/files/build"
 
-	# Let's download all the files we track
-	download_files "$URL" "$DOMAIN_DIR/files"
+  # Let's download all the files we track
+  download_files "$URL" "$DOMAIN_DIR/files"
 
-	if [[ `git status --porcelain` ]]; then
-		# We have a diff! Let's handle it
-		echo "There are differences, checking..."
-		handle_diff $DOMAIN
-	else
-		echo "No differences"
-	fi
+  if [[ `git status --porcelain` ]]; then
+    # We have a diff! Let's handle it
+    echo "There are differences, checking..."
+    handle_diff $DOMAIN
+  else
+    echo "No differences"
+  fi
 }
 
 ## GOGO
@@ -106,7 +115,7 @@ cd $SCRIPT_PATH # dirty
 
 # Handle each domain
 for DOMAIN in "${DOMAINS[@]}"; do
-	check_domain "$DOMAIN"
+  check_domain "$DOMAIN"
 done
 
 # Push changes (if any)
