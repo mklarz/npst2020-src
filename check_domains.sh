@@ -60,7 +60,7 @@ commit_diff() {
 	# Commit the changes
 	DOMAIN="$1"
 	git add -A
-	git commit -m "Update $DOMAIN"
+	git commit -m "[$DOMAIN] UPDATE"
 }
 
 handle_diff() {
