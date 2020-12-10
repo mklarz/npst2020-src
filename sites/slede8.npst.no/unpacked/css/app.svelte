@@ -73,6 +73,7 @@ function spawn() {
     }
 }
 function runSingleStep() {
+    var _a, _b;
     const now = new Date().getTime();
     if (now - lastCycle < cycleDuration)
         return requestAnimationFrame(runSingleStep);
@@ -81,6 +82,11 @@ function runSingleStep() {
         spawn();
     try {
         let tick = session === null || session === void 0 ? void 0 : session.next();
+        const rawLine = ((_b = target === null || target === void 0 ? void 0 : target.pdb[((_a = tick === null || tick === void 0 ? void 0 : tick.value) === null || _a === void 0 ? void 0 : _a.pc) || 0]) === null || _b === void 0 ? void 0 : _b.raw) || "";
+        if (rawLine.includes(";!")) {
+            // breakpoint
+            executeNextInstructionWhenDone = false;
+        }
         if (tick === null || tick === void 0 ? void 0 : tick.done)
             return complete();
         runtime = Object.assign(Object.assign({}, runtime), tick === null || tick === void 0 ? void 0 : tick.value);
