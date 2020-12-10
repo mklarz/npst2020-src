@@ -96,6 +96,8 @@ check_domain() {
 }
 
 ## GOGO
+echo "Starting script..."
+
 # Initialize stuff
 mkdir -p $SITE_DIR
 
