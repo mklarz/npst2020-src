@@ -86,11 +86,11 @@ check_domain() {
 
 	# Let's download all the files we track
 	download_files "$URL" "$DOMAIN_DIR/files"
-	handle_diff $DOMAIN
 
 	if [[ `git status --porcelain` ]]; then
 		# We have a diff! Let's handle it
 		echo "There are differences, checking..."
+		handle_diff $DOMAIN
 	else
 		echo "No differences"
 	fi
