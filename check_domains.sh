@@ -92,6 +92,8 @@ check_domain() {
 		# We have a diff! Let's handle it
 		echo "There are differences, checking..."
 		handle_diff $DOMAIN
+	else
+		echo "No differences"
 	fi
 }
 
