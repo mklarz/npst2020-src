@@ -51,7 +51,7 @@ unpack_sourcemaps() {
 		# - running npx patch-package
 		# In addition, it requires relative paths
 		# Another alternative is python: unwebpack-sourcemap, albeit more messy
-		unpack "$OUTPUT_DIR" "$FILE" &>/dev/null
+		unpack "$OUTPUT_DIR" "$FILE"
 	done
 }
 

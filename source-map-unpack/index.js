@@ -48,7 +48,7 @@ try {
             var content = consumer.sourceContentFor(source);
             var filePath = process.cwd() + "/" + projectNameInput + "/" + source.substring(WEBPACK_SUBSTRING_INDEX);
             mkdirp.sync(path.dirname(filePath));
-	    try }
+	    try {
                 fs.writeFileSync(filePath, content);
 	    } catch (error) {
 	        console.log(error);
