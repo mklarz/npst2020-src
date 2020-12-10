@@ -47,8 +47,7 @@ unpack_sourcemaps() {
 		# source-map-unpack, best alternative atm.
 		# This tool also messes with paths, removing the first characters of each root file
 		# Fixed by:
-		# - editing source-map-unpack/dist/index.js
-		# - setting WEBPACK_SUBSTRING_INDEX = 11 to 10
+		# - editing source-map-unpack/dist/index.js (see source-map-unpack/index.js in this repo)
 		# - running npx patch-package
 		# In addition, it requires relative paths
 		# Another alternative is python: unwebpack-sourcemap, albeit more messy
