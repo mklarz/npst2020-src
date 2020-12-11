@@ -28,6 +28,13 @@ download_files() {
     FILE_SIZE=$(stat -c%s "$TMP_FILE")
 
     if [ $FILE_SIZE -ne 0 ]; then
+      if [[ $URL == "https://dass.npst.no"* ]] && [[ $FILE == *"bundle.js" ]]; then
+        # Only dass.npst.no includes the release version of the platform
+        RELEASE=$(cat "$TMP_FILE" | grep -Po 'release:"(\K.*?)"' | tr -d '"')
+        if [[ ! -z "$RELEASE" ]]; then
+          echo "$RELEASE" > "$SCRIPT_PATH/release_version.txt"
+        fi
+      fi
       mv "$TMP_FILE" "$OUTPUT_PATH"
     else
       rm "$TMP_FILE"
