@@ -99,6 +99,22 @@ function runSingleStep() {
         requestAnimationFrame(runSingleStep);
     }
 }
+function sprintToCompletion() {
+    var _a, _b;
+    if (!session)
+        spawn();
+    while (true) {
+        const tick = session === null || session === void 0 ? void 0 : session.next();
+        const rawLine = ((_b = target === null || target === void 0 ? void 0 : target.pdb[((_a = tick === null || tick === void 0 ? void 0 : tick.value) === null || _a === void 0 ? void 0 : _a.pc) || 0]) === null || _b === void 0 ? void 0 : _b.raw) || "";
+        if (tick === null || tick === void 0 ? void 0 : tick.done)
+            complete();
+        if (rawLine.includes(";!") || (tick === null || tick === void 0 ? void 0 : tick.done)) {
+            // breakpoint
+            runtime = Object.assign(Object.assign({}, runtime), tick === null || tick === void 0 ? void 0 : tick.value);
+            break;
+        }
+    }
+}
 function runToCompletion() {
     cycleDuration = RUN_CPU_CYCLE_DURATION;
     executeNextInstructionWhenDone = true;
@@ -195,6 +211,13 @@ function pause() {
 							fullWidth
 							fullHeight
 							on:click={runToCompletion}>
+							Jogg
+						</Button>
+						<Button
+							disabled={executeNextInstructionWhenDone}
+							fullWidth
+							fullHeight
+							on:click={sprintToCompletion}>
 							Løp
 						</Button>
 					</div>
