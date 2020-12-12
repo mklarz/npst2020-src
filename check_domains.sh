@@ -8,7 +8,7 @@ SCRIPT_PATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 SITE_DIR="$SCRIPT_PATH/sites"
 
 # Files we want to track, files ending with ".map" will considered as sourcemaps and unpacked.
-FILES=(site.webmanifest global.css build/bundle.css build/bundle.css.map build/bundle.js build/bundle.js.map)
+FILES=(robots.txt humans.txt index.html site.webmanifest global.css build/bundle.css build/bundle.css.map build/bundle.js build/bundle.js.map)
 
 # The domains to monitor
 DOMAINS=(npst.no dass.npst.no slede8.npst.no spst.no)
