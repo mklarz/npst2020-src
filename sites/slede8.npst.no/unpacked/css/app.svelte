@@ -14,7 +14,7 @@ import Stdin from "./components/stdin.svelte";
 import Stdout from "./components/stdout.svelte";
 ;
 import { workspace } from "./store";
-const CPU_CYCLE_LIMIT = 1000;
+const CPU_CYCLE_LIMIT = 10000;
 const WALK_CPU_CYCLE_DURATION = 100;
 const RUN_CPU_CYCLE_DURATION = 0;
 const DEFAULT_RUNTIME = {
