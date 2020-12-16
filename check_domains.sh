@@ -16,8 +16,9 @@ DOMAINS=(npst.no dass.npst.no slede8.npst.no spst.no)
 ## FUNCTIONS
 download_files() {
   # Download the tracked files from the specified URL
-  URL="$1"
-  OUTPUT_DIR="$2"
+  DOMAIN="$1"
+  URL="$2"
+  OUTPUT_DIR="$3"
   for FILE in "${FILES[@]}"; do
     TMP_FILE=$(mktemp /tmp/npst.XXXXXX)
     FILE_URL="$URL/$FILE"
@@ -33,6 +34,7 @@ download_files() {
         RELEASE=$(cat "$TMP_FILE" | grep -Po 'release:"(\K.*?)"' | tr -d '"')
         if [[ ! -z "$RELEASE" ]]; then
           echo "$RELEASE" > "$SCRIPT_PATH/release_version.txt"
+          COMMIT_MESSAGE="[$DOMAIN] Release version update"
         fi
       fi
       mv "$TMP_FILE" "$OUTPUT_PATH"
@@ -75,18 +77,19 @@ commit_diff() {
   # Commit the changes
   DOMAIN="$1"
   git add -A
-  git commit -m "[$DOMAIN] UPDATE"
+  git commit -m "$COMMIT_MESSAGE"
 }
 
 handle_diff() {
   DOMAIN="$1"
+  COMMIT_MESSAGE="$2"
   DOMAIN_DIR="$SITE_DIR/$DOMAIN"
 
   # Check sourcemaps
   unpack_sourcemaps $DOMAIN
 
   # Commit the differences
-  commit_diff $DOMAIN $DOMAIN_DIR
+  commit_diff $DOMAIN $DOMAIN_DIR $COMMIT_MESSAGE
 }
 
 check_domain() {
@@ -100,13 +103,14 @@ check_domain() {
   mkdir -p "$DOMAIN_DIR/unpacked/css"
   mkdir -p "$DOMAIN_DIR/files/build"
 
+  COMMIT_MESSAGE="[$DOMAIN] UPDATE"
   # Let's download all the files we track
-  download_files "$URL" "$DOMAIN_DIR/files"
+  download_files "$DOMAIN" "$URL" "$DOMAIN_DIR/files"
 
   if [[ `git status --porcelain` ]]; then
     # We have a diff! Let's handle it
     echo "There are differences, checking..."
-    handle_diff $DOMAIN
+    handle_diff $DOMAIN $COMMIT_MESSAGE
   else
     echo "No differences"
   fi
