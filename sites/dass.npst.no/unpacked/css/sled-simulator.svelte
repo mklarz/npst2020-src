@@ -130,11 +130,9 @@ function uploadFirmware() {
     }));
 }
 function runSimulation() {
-    // kan maks bruke 100 ticks før det timer ut!
     result = { message: null, success: false };
     const timeBetweenFrames = 100;
     let lastFrame = 0;
-    // const seed = Date.now(); // 41;
     const frames = simulation(seed, firmware);
     const renderFrame = () => {
         let now = Date.now();
