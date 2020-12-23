@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 
-	let snowflakes = new Array(150)
+	export let count: number = 150;
+	export let size: "sm" | "lg" = "lg";
+
+	$: fontSize = size === "sm" ? "10px" : "3rem";
+
+	let snowflakes = new Array(count)
 		.fill(0)
-		.map((_, i) => {
+		.map((_) => {
 			return {
 				x: Math.random() * 100 - 3,
 				y: -20 - Math.random() * 100,
@@ -36,7 +41,7 @@
 <section aria-hidden="true">
 	{#each snowflakes as e}
 		<span
-			style="left: {e.x}%; top: {e.y}%; transform: scale({e.r})"
+			style="left: {e.x}%; top: {e.y}%; transform: scale({e.r}); font-size: {fontSize}"
 			role="img"
 			aria-hidden="true">
 			❄
@@ -60,7 +65,7 @@
 
 	span {
 		position: absolute;
-		font-size: 3rem;
+		/* font-size: 3rem; */
 		opacity: 1;
 	}
 </style>

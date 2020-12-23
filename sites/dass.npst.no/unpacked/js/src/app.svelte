@@ -5,6 +5,7 @@
 	import Paint from "./apps/paint/paint.svelte";
 	import Run from "./apps/run.svelte";
 	import Scoreboard from "./apps/scoreboard.svelte";
+	import SledSimulator from "./apps/sled-simulator/sled-simulator.svelte";
 	import Hourglass from "./components/hourglass.svelte";
 	import KernelPanic from "./components/kernel-panic.svelte";
 	import Taskbar from "./components/taskbar.svelte";
@@ -59,6 +60,15 @@
 				id: "app-paint",
 			},
 			requireSP: 1,
+		},
+		{
+			name: "🛷 Sledesimulator",
+			requireLogin: true,
+			application: {
+				component: SledSimulator,
+				id: "app-sled-simulator",
+			},
+			requireSP: 2,
 		},
 		{
 			name: "ℹ Informasjon",
