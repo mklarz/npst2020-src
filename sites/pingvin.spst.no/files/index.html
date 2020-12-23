@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>pingvin.spst.no</title>
+
+    <style>
+			body {
+				margin-top: 30px;
+				font-family: Arial, Helvetica, sans-serif;
+				text-align: center;
+			}
+
+			h1 {
+				font-size: 18px;
+			}
+
+			img {
+				height: 350px;
+			}
+
+			p {
+				font-size: 16px;
+			}
+		</style>
+  </head>
+
+  <body>
+		<h1>pingvin.spst.no</h1>
+		<img alt="Keiserpingvin, Foto: Samuel Blanc" src="/keiserpingvin.jpg" />
+		<p>
+			Pingviner er majestetiske dyr.
+			<br />
+			Pingviner legger bl.a. <a href="https://egg.spst.no">egg</a>.
+		</p>
+
+		<details>
+			<summary>🐧</summary>
+			<p>Her kan du benytte SPSTs hyperavanserte AI for å telle 🐧er</p>
+			<form>
+				<input id="input" type="text" value="❄🐧❄🥚🐧" />
+				<button>Tell pingviner</button>
+			</form>
+		</details>
+		
+	</body>
+
+	<script>
+		document.querySelector("form").addEventListener("submit", (event) => {
+			event.preventDefault();
+			const input = btoa(unescape(encodeURIComponent(document.getElementById("input").value || "")))
+			fetch(`/.netlify/functions/count?input=${encodeURIComponent(input)}`)
+				.then(res => {
+					if (!res.ok) return handleError();
+					return res.json()
+						.then(handleSuccess)
+						.catch(handleError)
+				})
+				.catch(handleError)
+			});
+		
+		function handleSuccess(response) {
+			alert(`Fant ${response.svar[0]} pingviner!`);
+		}
+
+		function handleError(error) {
+			alert("Noe gikk galt!");
+		}
+	</script>
+</html>

@@ -8,10 +8,10 @@ SCRIPT_PATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 SITE_DIR="$SCRIPT_PATH/sites"
 
 # Files we want to track, files ending with ".map" will considered as sourcemaps and unpacked.
-FILES=(robots.txt humans.txt index.html site.webmanifest global.css build/bundle.css build/bundle.css.map build/bundle.js build/bundle.js.map)
+FILES=(robots.txt humans.txt index.html egg.jpg site.webmanifest global.css build/bundle.css build/bundle.css.map build/bundle.js build/bundle.js.map)
 
 # The domains to monitor
-DOMAINS=(npst.no dass.npst.no slede8.npst.no spst.no)
+DOMAINS=(npst.no dass.npst.no slede8.npst.no spst.no pingvin.spst.no egg.spst.no)
 
 ## FUNCTIONS
 download_files() {
@@ -75,7 +75,7 @@ unpack_sourcemaps() {
 
 commit_diff() {
   # Commit the changes
-  DOMAIN="$1"
+  COMMIT_MESSAGE="$1"
   git add -A
   git commit -m "$COMMIT_MESSAGE"
 }
@@ -89,7 +89,7 @@ handle_diff() {
   unpack_sourcemaps $DOMAIN
 
   # Commit the differences
-  commit_diff $DOMAIN $DOMAIN_DIR $COMMIT_MESSAGE
+  commit_diff $COMMIT_MESSAGE
 }
 
 check_domain() {
